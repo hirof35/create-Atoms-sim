@@ -1,5 +1,60 @@
-🌀 Raycast Engine TSTypeScriptで構築された、フルスクラッチの2.5Dレイキャストエンジンです。1990年代のレトロなFPS（Wolfenstein 3Dなど）の仕組みを現代のWeb技術で再現しました。🚀 特徴DDA (Digital Differential Analyzer) アルゴリズム: 高速かつ高精度な壁の衝突判定を実現。テクスチャマッピング: 各壁に異なる質感や影を適用。スプライトレンダリング: Zバッファを用いた、壁との前後関係が正しいオブジェクト描画。FPS操作: Pointer Lock APIを使用した直感的な視点移動とWASD操作。モダンな開発環境: Vite + TypeScript による高速なホットリロード。🛠️ 技術スタック言語: TypeScript描画: HTML5 Canvas APIビルドツール: Viteアルゴリズム: Raycasting (DDA)🎮 操作方法キーアクションクリックポインターロック（操作開始）マウス移動視点回転W / S前進 / 後退A / D左移動 / 右移動Esc操作終了（マウス解放）📦 セットアップ依存関係のインストール:Bashnpm install
-開発サーバーの起動:Bashnpm run dev
-ブラウザで http://localhost:8080 (または表示されたURL) にアクセス。🏗️ フォルダ構成src/main.ts: エンジンのコアロジック、DDA計算、レンダリングループ。index.html: エントリーポイントおよび描画用Canvasの定義。public/: テクスチャやスプライトなどの静的アセット。
+# 🧪 3D Molecule Simulator (create-Atoms-sim)
 
-<img width="1553" height="1127" alt="スクリーンショット 2026-05-11 140804" src="https://github.com/user-attachments/assets/1b980558-fd18-4691-b038-a3948549d1c3" />
+React、TypeScript、そして React Three Fiber (Three.js) を用いて構築された、ブラウザ上で動的に分子構造を解析・視覚化できるスタイリッシュな3D分子シミュレーターです。
+<img width="1670" height="1043" alt="スクリーンショット 2026-05-30 123411" src="https://github.com/user-attachments/assets/f5a118d5-87f5-4f5d-8b89-8ea81292b48f" />
+
+データの統合管理、コンポーネントの構造化、厳格な型安全性を意識したアーキテクチャで設計されています。
+
+---
+
+## 🚀 主な機能
+
+- **動的な3D分子レンダリング**: 水 ($H_2O$) や二酸化炭素 ($CO_2$) などの分子構造を3D空間に正確に配置。
+- **インタラクティブな操作**: マウスドラッグによる自由なカメラ操作（回転・ズーム・パン）および自動回転制御。
+- **原子の選択・詳細パネル**: 3D空間上の原子を直接クリックすることで、元素名、ID、リアルタイムな3D座標空間の位置をポップアップ表示。
+- **UI/UXコンポーネント設計**: CSS-in-JSによる、視認性の高いダークモードベースのサイドコントロールパネル。
+
+---
+
+## 🛠️ 技術スタック & アーキテクチャ
+
+本プロジェクトは、システム論理の整合性と保守性を最優先に変革・構築されています。
+
+- **Frontend**: React (Functional Components + Hooks)
+- **3D Graphics**: Three.js / `@react-three/fiber` / `@react-three/drei`
+- **Build Tool**: Vite (超高速な開発環境パイプライン)
+- **Language**: TypeScript (厳格モード)
+  - `verbatimModuleSyntax` ルールに完全準拠し、実行時コードと型インポート (`import type`) を厳密に分離。
+  - JSXエレメント定義の参照整合性を担保。
+
+### 📂 ディレクトリ構造
+
+```text
+src/
+├── main.tsx              # エントリーポイント。アプリケーションの統合・起動
+├── App.tsx               # メインレイアウト、サイドバーUI、状態管理 (State Control)
+├── MoleculeViewer.tsx    # 3D空間を統括するステージコンポーネント
+├── AtomComponent.tsx     # 原子（SphereMesh）の挙動・ホバー・クリック制御
+├── BondComponent.tsx     # 結合（CylinderMesh）のベクトル計算・描画制御
+├── types.ts              # 厳格なデータ構造を規定する型定義
+└── data.ts               # 分子構造データのロジスティクス管理（兵站データ）
+📦 セットアップと起動方法
+1. 依存関係のインストール
+Bash
+npm install
+2. 開発サーバーの起動
+Bash
+npm run dev
+起動後、ブラウザで http://localhost:5173/ にアクセスします。
+
+💡 構造科学と設計思想
+このシミュレーターは、単なるビジュアルツールではなく、「データ（兵站・ロジスティクス）」、「構造（アーキテクチャ）」、「指揮統制（コントロール）」の3つの独立したレイヤーが正確にインターフェースを介して結合するシステムとして設計されています。
+
+データレイヤー (types.ts / data.ts)
+元素テーブルや原子・結合の配列構造を厳密に定義し、拡張性の高いマスタデータとして分離。
+
+構造レイヤー (AtomComponent.tsx / BondComponent.tsx)
+3D空間におけるベクトル計算（2つの原子間の距離と方向ベクトルのクォータニオン変換による結合の配置など）をコンポーネント内部に隠蔽し、自己完結的な美学を持たせています。
+
+統制レイヤー (App.tsx)
+ユーザーの入力と3D空間のインタラクションを一元的にハンドリングし、システムの状態を自立的に同期します。
